@@ -1,5 +1,6 @@
 package co.example.dao;
 
+import co.example.entity.Product;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.List;
 
 @Component("jdbcDao")
 @NoArgsConstructor
@@ -43,6 +45,56 @@ public class JdbcProductDao implements ProductDao{
         // for AppConfig1
         Class.forName(driverClassName);
         return DriverManager.getConnection(url,user,password);
+    }
+
+    @Override
+    public void addProduct(Product product) throws DaoException {
+
+    }
+
+    @Override
+    public void updateProduct(Product product) throws DaoException {
+
+    }
+
+    @Override
+    public Product getProduct(Integer productId) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public void deleteProduct(Integer productId) throws DaoException {
+
+    }
+
+    @Override
+    public List<Product> getAllProducts() throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Product> getProductByPriceRange(Double min, Double max) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Product> getProductIncategory(Integer categoryId) throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Product> getProductNotInStock() throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Product> getProductOnorder() throws DaoException {
+        return null;
+    }
+
+    @Override
+    public List<Product> getDiscontinuedProducts() throws DaoException {
+        return null;
     }
 
     @Override

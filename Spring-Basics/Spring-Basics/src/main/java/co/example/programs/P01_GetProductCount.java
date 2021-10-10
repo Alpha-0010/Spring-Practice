@@ -1,11 +1,12 @@
 package co.example.programs;
 
 import co.example.cfg.AppConfig3;
+import co.example.dao.DaoException;
 import co.example.dao.ProductDao;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class P01_GetProductCount {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DaoException {
         // Our Dependency....
         ProductDao dao;
 

@@ -1,15 +1,32 @@
 package co.example.programs;
 
 import co.example.cfg.AppConfig4;
+import co.example.entity.Category;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 public class P02_TestingJdbcTemplate {
 
     static JdbcTemplate template;
+
+    // Fixing up the rowMapper so that we can use this to select rows based on Ids of the category...
+    static RowMapper<Category> rowMapper=new RowMapper<Category>() {
+        @Override
+        public Category mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Category c=new Category();
+            c.setCategoryId(rs.getInt("category_id"));
+            c.setCategoryName(rs.getString("category_name"));
+            c.setCategoryDescription(rs.getString("description"));
+            c.setPicture(rs.getBytes("picture"));
+            return c;
+        }
+    };
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext ctx;
@@ -23,8 +40,27 @@ public class P02_TestingJdbcTemplate {
         //printProductDetails(33);
         //printAllShippers();
         //printAllShipperNames();
+        //getCategory(1); // Querying by converting the result set into category object...
+        getAllCategories();
 
         ctx.close();
+    }
+
+    // Again using rowMapper...
+    static void getAllCategories() {
+        String sql="select * from categories";
+        List<Category> list = template.query(sql, rowMapper);
+        for(Category c : list){
+            System.out.println(c.toString());
+        }
+    }
+
+    // Use the rowMapper in the getCategory() method...
+    static void getCategory(int categoryId) {
+        String sql="select * from categories where category_id=?";
+
+        Category cat = template.queryForObject(sql, rowMapper, categoryId);
+        System.out.println(cat.getCategoryId()+" "+cat.getCategoryName()+" "+cat.getCategoryDescription());
     }
 
     static void printAllShipperNames() {

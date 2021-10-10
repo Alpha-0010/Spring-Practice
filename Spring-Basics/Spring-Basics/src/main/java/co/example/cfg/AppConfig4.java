@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
+@ComponentScan(basePackages = {"co.example.dao"})
 @Configuration
 @PropertySource("classpath:application.properties")
 public class AppConfig4 {
